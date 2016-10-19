@@ -26,12 +26,9 @@ public class StoreControllerTest extends TestCase{
 	@Test
 	public void testStoreControllerConstructor() throws Exception{
 		Environment.initialize(propertyFilename);
-		CashPropertyLoader cashLoader =
-			new CashPropertyLoader(Environment.getCashPropFile());
-		DrinkPropertyLoader drinksLoader =
-			new DrinkPropertyLoader(Environment.getDrinkPropFile());
-		cashLoader.initialize();
-		drinksLoader.initialize();
+		PropertyLoaderFactory factory = new PropertyLoaderFactory();
+		CashPropertyLoader cashLoader = (CashPropertyLoader) factory.getPropertyLoader("CASH_FILE", Environment.getCashPropFile());
+		DrinkPropertyLoader drinksLoader = (DrinkPropertyLoader) factory.getPropertyLoader("DRINK_FILE", Environment.getDrinkPropFile());
 		//Act
 		StoreController storeController=new StoreController(cashLoader, drinksLoader);
 		storeController.initialize();

@@ -72,7 +72,7 @@ public class StoreController {
 	private void initializeDrinkStore() throws IOException {
 
 		// get the drink file from the environment property file;
-		int numOfItems = drinksLoader.getNumOfItems();
+		int numOfItems = drinksLoader.getPropertyLoaderImpl().getNumOfItems();
 		dStore.setStoreSize(numOfItems);
 
 		for (int i = 0; i < numOfItems; i++) {
@@ -93,7 +93,7 @@ public class StoreController {
 	private void initializeCashStore() throws IOException {
 
 		// get the cash file from the environment property file;
-		int numOfItems = cashLoader.getNumOfItems();
+		int numOfItems = cashLoader.getPropertyLoaderImpl().getNumOfItems();
 		cStore.setStoreSize(numOfItems);
 
 		for (int i = 0; i < numOfItems; i++) {
@@ -249,11 +249,11 @@ public class StoreController {
 	 */
 	private void saveCashProperties() throws IOException {
 		int size = cStore.getStoreSize();
-		cashLoader.setNumOfItems(size);
+		cashLoader.getPropertyLoaderImpl().setNumOfItems(size);
 		for (int i = 0; i < size; i++) {
 			cashLoader.setItem(i, cStore.getStoreItem(i));
 		}
-		cashLoader.saveProperty();
+		cashLoader.getPropertyLoaderImpl().saveProperty();
 	}
 
 	/**
@@ -263,11 +263,11 @@ public class StoreController {
 	 */
 	private void saveDrinksProperties() throws IOException {
 		int size = dStore.getStoreSize();
-		drinksLoader.setNumOfItems(size);
+		drinksLoader.getPropertyLoaderImpl().setNumOfItems(size);
 		for (int i = 0; i < size; i++) {
 			drinksLoader.setItem(i, dStore.getStoreItem(i));
 		}
-		drinksLoader.saveProperty();
+		drinksLoader.getPropertyLoaderImpl().saveProperty();
 	}
 
 	/**
