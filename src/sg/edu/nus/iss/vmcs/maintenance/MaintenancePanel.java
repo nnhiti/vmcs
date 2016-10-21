@@ -9,6 +9,7 @@ package sg.edu.nus.iss.vmcs.maintenance;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -22,7 +23,8 @@ import java.awt.Toolkit;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.util.LabelledDisplay;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
-import sg.edu.nus.iss.vmcs.util.WarningDisplay;
+import sg.edu.nus.iss.vmcs.util.components.*;
+import sg.edu.nus.iss.vmcs.util.factory.UtilAbstractFactory;
 
 /**
  * This panel simulates the vending machines maintainer control panel&#46;
@@ -72,7 +74,8 @@ public class MaintenancePanel extends Dialog {
 	private WarningDisplay validPswd;
 	private WarningDisplay invalidPswd;
 	private MaintenanceController mctrl;
-
+	private UtilAbstractFactory factory = UtilAbstractFactory.getAbstractFactory("AWT");
+	
 	/**
 	 * This constructor creates an instance of MaintenancePanel object.
 	 * @param fr the parent frame.
@@ -97,10 +100,10 @@ public class MaintenancePanel extends Dialog {
 		password.addListener(pl);
 
 		Panel tp3 = new Panel();
-		validPswd = new WarningDisplay("Valid Password");
-		invalidPswd = new WarningDisplay("Invalid Password");
-		tp3.add(validPswd);
-		tp3.add(invalidPswd);
+		validPswd = factory.getWarningDisplay("Valid Password");
+		invalidPswd = factory.getWarningDisplay("Invalid Password");
+		tp3.add((Component) validPswd);
+		tp3.add((Component) invalidPswd);
 		tpn.add(tp1);
 		tpn.add(password);
 		tpn.add(tp3);

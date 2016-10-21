@@ -32,8 +32,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
-import sg.edu.nus.iss.vmcs.util.LabelledValue;
-import sg.edu.nus.iss.vmcs.util.WarningDisplay;
+import sg.edu.nus.iss.vmcs.util.components.*;
+import sg.edu.nus.iss.vmcs.util.factory.UtilAbstractFactory;
 
 /**
  * This class Customer Panel display the GUI interactive with the Customer&#46;
@@ -84,18 +84,20 @@ public class CustomerPanel extends Dialog {
 	
 	private static final String TITLE = "Customer Panel";
 	private TransactionController txCtrl;
+	private UtilAbstractFactory factory = UtilAbstractFactory.getAbstractFactory("AWT");
 
 	private Panel pan0=new Panel();
     private Label lblTitle=new Label("VMCS Soft Drinks Dispenser");
     private Label lblEnterCoins=new Label("Enter Coins Here");
     private CoinInputBox coinInputBox;
     private DrinkSelectionBox drinkSelectionBox;
-    private WarningDisplay wndInvalidCoin=new WarningDisplay("Invalid Coin");
-    private LabelledValue lbdTotalMoneyInserted=new LabelledValue("Total Money Inserted:","0 C",50);
-    private WarningDisplay wndNoChangeAvailable=new WarningDisplay("No Change Available");
     private Button btnTerminate=new Button("Terminate and Return Cash");
-    private LabelledValue lbdCollectCoins=new LabelledValue("Collect Coins:","0 C",50);
-    private LabelledValue lbdCollectCan=new LabelledValue("Collect Can Here:","",100);
+    
+    private WarningDisplay wndInvalidCoin=factory.getWarningDisplay("Invalid Coin");
+    private LabelledValue lbdTotalMoneyInserted=factory.getLabelledValue("Total Money Inserted:","0 C",50);
+    private WarningDisplay wndNoChangeAvailable=factory.getWarningDisplay("No Change Available");
+    private LabelledValue lbdCollectCoins=factory.getLabelledValue("Collect Coins:","0 C",50);
+    private LabelledValue lbdCollectCan=factory.getLabelledValue("Collect Can Here:","",100);
     
     /**
      * This constructor creates an instance of the Customer Panel&#46; It further
@@ -138,25 +140,25 @@ public class CustomerPanel extends Dialog {
 		pan0.add(coinInputBox,new GridBagConstraints(0,1,0,1,1.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(2,0,0,0),10,0));  
-		pan0.add(wndInvalidCoin,new GridBagConstraints(0,2,1,1,1.0,0.0,
+		pan0.add((Component) wndInvalidCoin,new GridBagConstraints(0,2,1,1,1.0,0.0,
 			    GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,
 			    new Insets(5,0,0,0),10,0));
-		pan0.add(lbdTotalMoneyInserted,new GridBagConstraints(0,3,0,1,0.0,0.0,
+		pan0.add((Component) lbdTotalMoneyInserted,new GridBagConstraints(0,3,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(5,0,0,0),10,0));
 		pan0.add(drinkSelectionBox,new GridBagConstraints(0,4,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(5,0,0,0),10,0));
-		pan0.add(wndNoChangeAvailable,new GridBagConstraints(0,5,0,1,0.0,0.0,
+		pan0.add((Component) wndNoChangeAvailable,new GridBagConstraints(0,5,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(5,0,0,0),10,0));
 		pan0.add(btnTerminate,new GridBagConstraints(0,6,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.NONE,
 			    new Insets(5,0,0,0),10,0));
-		pan0.add(lbdCollectCoins,new GridBagConstraints(0,7,0,1,0.0,0.0,
+		pan0.add((Component) lbdCollectCoins,new GridBagConstraints(0,7,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(5,0,0,0),10,0));
-		pan0.add(lbdCollectCan,new GridBagConstraints(0,8,0,1,0.0,0.0,
+		pan0.add((Component) lbdCollectCan,new GridBagConstraints(0,8,0,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,
 			    new Insets(2,0,20,0),10,0));
 		

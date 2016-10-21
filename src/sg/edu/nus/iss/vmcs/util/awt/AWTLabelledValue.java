@@ -5,7 +5,7 @@
  * than for the purpose for which it has been supplied.
  *
  */
-package sg.edu.nus.iss.vmcs.util;
+package sg.edu.nus.iss.vmcs.util.awt;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,13 +15,15 @@ import java.awt.Insets;
 import java.awt.Label;
 import java.awt.Panel;
 
+import sg.edu.nus.iss.vmcs.util.components.LabelledValue;
+
 /**
  * This boundary object displays an updatable label next to a fixed label.
  * @version 1.0 2008-10-01
  * @author Team SE16T5E
  */
 
-public class LabelledValue extends Panel {
+public class AWTLabelledValue extends Panel implements LabelledValue{
 	private Label lbl1;
 	private Label lbl2;
 
@@ -31,7 +33,7 @@ public class LabelledValue extends Panel {
 	 * @param value the value of the updatable label.
 	 * @param width the width of the updatable label.
 	 */
-	public LabelledValue(String name, String value, int width) {
+	public AWTLabelledValue(String name, String value, int width) {
 		lbl1=new Label(name);
 		lbl2=new Label(value);
 		

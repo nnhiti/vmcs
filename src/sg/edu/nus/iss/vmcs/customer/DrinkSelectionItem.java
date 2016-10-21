@@ -9,6 +9,7 @@ package sg.edu.nus.iss.vmcs.customer;
 
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,7 +18,8 @@ import java.awt.Label;
 import java.awt.Panel;
 import java.awt.event.ActionListener;
 
-import sg.edu.nus.iss.vmcs.util.WarningDisplay;
+import sg.edu.nus.iss.vmcs.util.components.*;
+import sg.edu.nus.iss.vmcs.util.factory.UtilAbstractFactory;
 
 /**
  * This boundary object enables a drink to be displayed and selected&#46; 
@@ -28,7 +30,8 @@ import sg.edu.nus.iss.vmcs.util.WarningDisplay;
 public class DrinkSelectionItem extends Panel{
 	private Button btn=new Button("");
 	private Label lbl=new Label();
-	private WarningDisplay wnd=new WarningDisplay("Not in Stock");
+	private UtilAbstractFactory factory = UtilAbstractFactory.getAbstractFactory("AWT");
+	private WarningDisplay wnd=factory.getWarningDisplay("Not in Stock");
 	
 	private int drinkIdentifier=-1;
 	private String name="";
@@ -70,7 +73,7 @@ public class DrinkSelectionItem extends Panel{
 		add(lbl,new GridBagConstraints(1,0,1,1,0.0,0.0,
 			    GridBagConstraints.CENTER,GridBagConstraints.NONE,
 			    new Insets(5,15,0,0),50,0));
-		add(wnd,new GridBagConstraints(2,0,1,1,0.0,0.0,
+		add((Component) wnd,new GridBagConstraints(2,0,1,1,0.0,0.0,
 			    GridBagConstraints.WEST,GridBagConstraints.NONE,
 			    new Insets(5,4,0,0),10,0));
 	}
