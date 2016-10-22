@@ -16,9 +16,9 @@ public abstract class UtilAbstractFactory {
 	{
 		switch ( category ) {
 		case "AWT":
-			return new UtilAWTFactory();
+			return UtilAWTFactory.getInstance();
 		default: 
-			return new UtilAWTFactory();
+			return UtilAWTFactory.getInstance();
 		}
 	}
 	

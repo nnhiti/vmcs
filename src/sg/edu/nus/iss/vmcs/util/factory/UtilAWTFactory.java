@@ -2,10 +2,12 @@ package sg.edu.nus.iss.vmcs.util.factory;
 
 import java.awt.Color;
 
+import jdk.internal.dynalink.beans.StaticClass;
 import sg.edu.nus.iss.vmcs.util.awt.AWTLabelledValue;
 import sg.edu.nus.iss.vmcs.util.awt.AWTWarningDisplay;
 import sg.edu.nus.iss.vmcs.util.components.LabelledValue;
 import sg.edu.nus.iss.vmcs.util.components.WarningDisplay;
+import sun.security.jca.GetInstance;
 
 /**
  * This is the concrete factory for ui components implemented with AWT API.
@@ -14,6 +16,17 @@ import sg.edu.nus.iss.vmcs.util.components.WarningDisplay;
  */
 public class UtilAWTFactory extends UtilAbstractFactory{
 
+	private UtilAWTFactory(){
+	}
+	
+	private static class FactoryHolder{
+		private static UtilAWTFactory instance = new UtilAWTFactory();
+	}
+	
+	public static UtilAWTFactory getInstance(){
+		return FactoryHolder.instance;
+	}
+	
 	@Override
 	public LabelledValue getLabelledValue( String name, String value, int width ) {
 		// TODO Auto-generated method stub
