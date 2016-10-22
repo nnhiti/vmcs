@@ -30,6 +30,8 @@ import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Observable;
+import java.util.Observer;
 
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 import sg.edu.nus.iss.vmcs.util.LabelledValue;
@@ -73,7 +75,7 @@ import sg.edu.nus.iss.vmcs.util.WarningDisplay;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class CustomerPanel extends Dialog {
+public class CustomerPanel extends Dialog implements Observer{
 	private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize();
 	private int frameX=0;
 	private int frameY=0;
@@ -357,5 +359,13 @@ public class CustomerPanel extends Dialog {
 	public void setActive(int comp, boolean st) {
 		Component c=this.getComponent(comp);
 		c.setEnabled(st);
+	}
+	
+	/**
+	 * when make transaction will auto call this update
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		this.setTerminateButtonActive(true);
 	}
 }//End of class CustomerPanel

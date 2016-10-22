@@ -7,6 +7,9 @@
  */
 package sg.edu.nus.iss.vmcs.customer;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import sg.edu.nus.iss.vmcs.store.CashStoreItem;
 import sg.edu.nus.iss.vmcs.store.Coin;
 import sg.edu.nus.iss.vmcs.store.Iterator;
@@ -21,7 +24,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class ChangeGiver {
+public class ChangeGiver implements Observer{
 	private TransactionController txCtrl; 
 
 	/**
@@ -103,5 +106,14 @@ public class ChangeGiver {
 				isAnyDenoEmpty=true;
 		}
 		custPanel.displayChangeStatus(isAnyDenoEmpty);
+	}
+	
+	/**
+	 * when make transaction will auto call this update
+	 */
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		resetChange();
+		displayChangeStatus();
 	}
 }//End of class ChangeGiver

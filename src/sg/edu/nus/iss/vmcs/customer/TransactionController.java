@@ -16,6 +16,7 @@ package sg.edu.nus.iss.vmcs.customer;
  */
 
 import java.awt.Frame;
+import java.util.Observable;
 
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.Store;
@@ -29,7 +30,7 @@ import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class TransactionController {
+public class TransactionController extends Observable{
 	private MainController mainCtrl;
 	private CustomerPanel custPanel;
 	private DispenseController dispenseCtrl;
@@ -54,6 +55,10 @@ public class TransactionController {
 		dispenseCtrl=new DispenseController(this);
 		coinReceiver=new CoinReceiver(this);
 		changeGiver=new ChangeGiver(this);
+		
+		this.addObserver(changeGiver);
+		this.addObserver(dispenseCtrl);
+		this.addObserver(coinReceiver);
 	}
 
 	/**
@@ -71,6 +76,7 @@ public class TransactionController {
 		SimulatorControlPanel scp = mainCtrl.getSimulatorControlPanel();
 	    custPanel = new CustomerPanel((Frame) scp, this);
 		custPanel.display();
+		this.addObserver(custPanel);
 		dispenseCtrl.updateDrinkPanel();
 		dispenseCtrl.allowSelection(true);
 		changeGiver.displayChangeStatus();
@@ -99,12 +105,9 @@ public class TransactionController {
 		StoreItem storeItem=mainCtrl.getStoreController().getStoreItem(Store.DRINK,drinkIdentifier);
 		DrinksBrand drinksBrand=(DrinksBrand)storeItem.getContent();
 		setPrice(drinksBrand.getPrice());
-		changeGiver.resetChange();
-		dispenseCtrl.ResetCan();
-		changeGiver.displayChangeStatus();
-		dispenseCtrl.allowSelection(false);
-		coinReceiver.startReceiver();
-		custPanel.setTerminateButtonActive(true);
+		
+		setChanged();
+	    notifyObservers();
 	}
 	
 	/**

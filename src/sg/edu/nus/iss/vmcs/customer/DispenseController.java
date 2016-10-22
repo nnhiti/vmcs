@@ -7,6 +7,9 @@
  */
 package sg.edu.nus.iss.vmcs.customer;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreController;
@@ -20,7 +23,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class DispenseController {
+public class DispenseController implements Observer{
     private TransactionController txCtrl;
     private int selection=0;
 	
@@ -90,6 +93,15 @@ public class DispenseController {
 	public void ResetCan(){
 		selection=-1;
 		txCtrl.getCustomerPanel().resetCan();
+	}
+	
+	/**
+	 * when make transaction will auto call this update
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		ResetCan();
+		allowSelection(false);
 	}
 	
 	/**
