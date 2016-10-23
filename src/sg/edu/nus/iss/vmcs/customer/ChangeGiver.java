@@ -116,7 +116,6 @@ public class ChangeGiver implements Observer{
 	public void update(Observable arg0, Object state) {
 		if (state == transtationState.startTransation) {
 			resetChange();
-			displayChangeStatus();
 		}else if (state == transtationState.cancelTransaction) {
 			
 		}

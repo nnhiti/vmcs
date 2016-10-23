@@ -103,11 +103,15 @@ public class DispenseController implements Observer{
 	public void update(Observable o, Object state) {
 		if (state == transtationState.startTransation) {
 			ResetCan();
+			((TransactionController)o).getChangeGiver().displayChangeStatus();
 			allowSelection(false);
+			((TransactionController)o).getCoinReceiver().startReceiver();
 		}else if (state == transtationState.cancelTransaction) {
 			allowSelection(true);
 		}else if (state == transtationState.terminateTransaction) {
 			allowSelection(false);
+			((TransactionController)o).getCoinReceiver().stopReceive();
+			((TransactionController)o).getCoinReceiver().refundCash();
 		}
 	}
 	

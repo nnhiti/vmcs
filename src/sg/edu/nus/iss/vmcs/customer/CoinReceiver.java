@@ -189,13 +189,11 @@ public class CoinReceiver implements Observer{
 	@Override
 	public void update(Observable o, Object state) {
 		if (state == transtationState.startTransation) {
-			startReceiver();
+			
 		}else if (state == transtationState.cancelTransaction) {
 			stopReceive();
 			refundCash();
 		}else if (state == transtationState.terminateTransaction) {
-			stopReceive();
-			refundCash();
 		}
 	}
 }//End of class CoinReceiver
