@@ -19,6 +19,8 @@ import java.awt.Frame;
 import java.util.Observable;
 
 import sg.edu.nus.iss.vmcs.customer.TransationStateConstant.transtationState;
+import sg.edu.nus.iss.vmcs.customer.strategy.StrategyFactory;
+import sg.edu.nus.iss.vmcs.customer.strategy.TransactionStrategy;
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreItem;
@@ -36,6 +38,9 @@ public class TransactionController extends Observable{
 	private DispenseController dispenseCtrl;
 	private ChangeGiver changeGiver;
 	private CoinReceiver coinReceiver;
+	
+	private StrategyFactory factory = new StrategyFactory();
+	private TransactionStrategy strategy;
 
 	/**Set to TRUE when change is successfully issued during the transaction.*/
 	private boolean changeGiven=false;
@@ -104,12 +109,17 @@ public class TransactionController extends Observable{
 		setSelection(drinkIdentifier);
 		StoreItem storeItem=mainCtrl.getStoreController().getStoreItem(Store.DRINK,drinkIdentifier);
 		DrinksBrand drinksBrand=(DrinksBrand)storeItem.getContent();
-		setPrice(drinksBrand.getPrice());
+		setStrategy("Common");
+		setPrice(strategy.calculate(drinksBrand));
 		
 		setChanged();
 	    notifyObservers(transtationState.startTransation);
 	}
 	
+	public void setStrategy( String s )
+	{
+		this.strategy = factory.getStrategy(s);
+	}
 	/**
 	 * This method processes the money received by the Coin Receiver during the progress
 	 * of a transaction&#46;  The following actions are performed during this method:
