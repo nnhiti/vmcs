@@ -10,6 +10,7 @@ package sg.edu.nus.iss.vmcs.customer;
 import java.util.Observable;
 import java.util.Observer;
 
+import sg.edu.nus.iss.vmcs.customer.TransationStateConstant.transtationState;
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreController;
@@ -99,9 +100,15 @@ public class DispenseController implements Observer{
 	 * when make transaction will auto call this update
 	 */
 	@Override
-	public void update(Observable o, Object arg) {
-		ResetCan();
-		allowSelection(false);
+	public void update(Observable o, Object state) {
+		if (state == transtationState.startTransation) {
+			ResetCan();
+			allowSelection(false);
+		}else if (state == transtationState.cancelTransaction) {
+			allowSelection(true);
+		}else if (state == transtationState.terminateTransaction) {
+			allowSelection(false);
+		}
 	}
 	
 	/**

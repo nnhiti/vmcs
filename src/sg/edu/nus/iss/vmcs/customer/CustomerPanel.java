@@ -33,6 +33,7 @@ import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
+import sg.edu.nus.iss.vmcs.customer.TransationStateConstant.transtationState;
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 import sg.edu.nus.iss.vmcs.util.LabelledValue;
 import sg.edu.nus.iss.vmcs.util.WarningDisplay;
@@ -365,7 +366,12 @@ public class CustomerPanel extends Dialog implements Observer{
 	 * when make transaction will auto call this update
 	 */
 	@Override
-	public void update(Observable o, Object arg) {
-		this.setTerminateButtonActive(true);
+	public void update(Observable o, Object state) {
+		if (state == transtationState.startTransation) {
+			setTerminateButtonActive(true);
+		}else if (state == transtationState.terminateTransaction) {
+			setTerminateButtonActive(false);
+		}
+		
 	}
 }//End of class CustomerPanel

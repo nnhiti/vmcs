@@ -10,6 +10,7 @@ package sg.edu.nus.iss.vmcs.customer;
 import java.util.Observable;
 import java.util.Observer;
 
+import sg.edu.nus.iss.vmcs.customer.TransationStateConstant.transtationState;
 import sg.edu.nus.iss.vmcs.store.CashStoreItem;
 import sg.edu.nus.iss.vmcs.store.Coin;
 import sg.edu.nus.iss.vmcs.store.Iterator;
@@ -112,8 +113,12 @@ public class ChangeGiver implements Observer{
 	 * when make transaction will auto call this update
 	 */
 	@Override
-	public void update(Observable arg0, Object arg1) {
-		resetChange();
-		displayChangeStatus();
+	public void update(Observable arg0, Object state) {
+		if (state == transtationState.startTransation) {
+			resetChange();
+			displayChangeStatus();
+		}else if (state == transtationState.cancelTransaction) {
+			
+		}
 	}
 }//End of class ChangeGiver
