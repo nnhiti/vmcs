@@ -70,7 +70,7 @@ public abstract class Store implements StoreIteratorContainer {
 	 * method to create iterator
 	 */
 	@Override
-	public Iterator createIterator() {
+	public Iterator<StoreItem> createIterator() {
 		return new StoreIterator();
 	}
 	
@@ -79,7 +79,7 @@ public abstract class Store implements StoreIteratorContainer {
 	 * @author Ha
 	 *
 	 */
-	private class StoreIterator implements Iterator {
+	private class StoreIterator implements Iterator<StoreItem> {
 		int index;
 		@Override
 		public boolean hasNext() {
@@ -95,6 +95,16 @@ public abstract class Store implements StoreIteratorContainer {
 				return items[index++];
 			}
 			return null;
+		}
+
+		@Override
+		public StoreItem first() {
+			return items[0];
+		}
+
+		@Override
+		public StoreItem currentItem() {
+			return items[index];
 		}
 	}
 

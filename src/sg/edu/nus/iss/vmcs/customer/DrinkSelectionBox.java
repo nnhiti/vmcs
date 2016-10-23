@@ -42,7 +42,7 @@ public class DrinkSelectionBox extends Panel{
 		StoreController storeCtrl=mainCtrl.getStoreController();
 		int drinkStoreSize=storeCtrl.getStoreSize(Store.DRINK);
 		//StoreItem[] drinkStoreItems=storeCtrl.getStore(Store.DRINK).getItems();
-		Iterator iter = storeCtrl.getStore(Store.DRINK).createIterator();
+		Iterator<StoreItem> iter = storeCtrl.getStore(Store.DRINK).createIterator();
 		
 		drinkSelectionItems=new DrinkSelectionItem[drinkStoreSize];
 		

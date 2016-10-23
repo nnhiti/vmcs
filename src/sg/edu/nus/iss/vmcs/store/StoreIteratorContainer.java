@@ -6,5 +6,5 @@ package sg.edu.nus.iss.vmcs.store;
  *
  */
 public interface StoreIteratorContainer {
-	public Iterator createIterator();
+	public Iterator<?> createIterator();
 }
