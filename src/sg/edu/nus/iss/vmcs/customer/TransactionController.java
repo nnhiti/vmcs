@@ -16,20 +16,21 @@ package sg.edu.nus.iss.vmcs.customer;
  */
 
 import java.awt.Frame;
+import java.util.Observable;
 
+import sg.edu.nus.iss.vmcs.customer.TransationStateConstant.transtationState;
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreItem;
 import sg.edu.nus.iss.vmcs.system.MainController;
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
-
 /**
  * This control object coordinates the customer transactions for selection of a drink brand,
  * coin input, storage of coins and termination requests for ongoing transactions.
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class TransactionController {
+public class TransactionController extends Observable{
 	private MainController mainCtrl;
 	private CustomerPanel custPanel;
 	private DispenseController dispenseCtrl;
@@ -54,6 +55,10 @@ public class TransactionController {
 		dispenseCtrl=new DispenseController(this);
 		coinReceiver=new CoinReceiver(this);
 		changeGiver=new ChangeGiver(this);
+		
+		this.addObserver(changeGiver);
+		this.addObserver(dispenseCtrl);
+		this.addObserver(coinReceiver);
 	}
 
 	/**
@@ -71,6 +76,7 @@ public class TransactionController {
 		SimulatorControlPanel scp = mainCtrl.getSimulatorControlPanel();
 	    custPanel = new CustomerPanel((Frame) scp, this);
 		custPanel.display();
+		this.addObserver(custPanel);
 		dispenseCtrl.updateDrinkPanel();
 		dispenseCtrl.allowSelection(true);
 		changeGiver.displayChangeStatus();
@@ -99,12 +105,9 @@ public class TransactionController {
 		StoreItem storeItem=mainCtrl.getStoreController().getStoreItem(Store.DRINK,drinkIdentifier);
 		DrinksBrand drinksBrand=(DrinksBrand)storeItem.getContent();
 		setPrice(drinksBrand.getPrice());
-		changeGiver.resetChange();
-		dispenseCtrl.ResetCan();
-		changeGiver.displayChangeStatus();
-		dispenseCtrl.allowSelection(false);
-		coinReceiver.startReceiver();
-		custPanel.setTerminateButtonActive(true);
+		
+		setChanged();
+	    notifyObservers(transtationState.startTransation);
 	}
 	
 	/**
@@ -187,12 +190,10 @@ public class TransactionController {
 	 */
 	public void terminateTransaction(){
 		System.out.println("TerminateTransaction: Begin");
-		dispenseCtrl.allowSelection(false);
-		coinReceiver.stopReceive();
-		coinReceiver.refundCash();
-		if(custPanel!=null){
-			custPanel.setTerminateButtonActive(false);
-		}
+		
+		setChanged();
+	    notifyObservers(transtationState.terminateTransaction);
+	    
 		refreshMachineryDisplay();
 		System.out.println("TerminateTransaction: End");
 	}
@@ -202,9 +203,10 @@ public class TransactionController {
 	 */
 	public void cancelTransaction(){
 		System.out.println("CancelTransaction: Begin");
-		coinReceiver.stopReceive();
-		coinReceiver.refundCash();
-		dispenseCtrl.allowSelection(true);
+		
+		setChanged();
+	    notifyObservers(transtationState.cancelTransaction);
+		
 		refreshMachineryDisplay();
 		System.out.println("CancelTransaction: End");
 	}
@@ -229,8 +231,11 @@ public class TransactionController {
 	 * machine.
 	 */
 	public void closeDown() {
-		if (custPanel != null)
+		if (custPanel != null){
+			this.deleteObserver(custPanel);
 			custPanel.closeDown();
+			
+		}
 	}
 
 	/**
@@ -341,6 +346,7 @@ public class TransactionController {
 	 * This method will nullify reference to customer panel.
 	 */
 	public void nullifyCustomerPanel(){
+		this.deleteObserver(custPanel);
 		custPanel=null;
 	}
 }//End of class TransactionController

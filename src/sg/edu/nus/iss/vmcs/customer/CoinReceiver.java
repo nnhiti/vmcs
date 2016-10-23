@@ -8,7 +8,10 @@
 package sg.edu.nus.iss.vmcs.customer;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
+import sg.edu.nus.iss.vmcs.customer.TransationStateConstant.transtationState;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.store.CashStore;
 import sg.edu.nus.iss.vmcs.store.Coin;
@@ -20,7 +23,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class CoinReceiver {
+public class CoinReceiver implements Observer{
 	private TransactionController txCtrl;
 	
 	/**List of the Coins entered during the transaction.*/
@@ -178,5 +181,21 @@ public class CoinReceiver {
 	 */
 	public int getTotalInserted() {
 		return totalInserted;
+	}
+	
+	/**
+	 * when make transaction will auto call this update
+	 */
+	@Override
+	public void update(Observable o, Object state) {
+		if (state == transtationState.startTransation) {
+			startReceiver();
+		}else if (state == transtationState.cancelTransaction) {
+			stopReceive();
+			refundCash();
+		}else if (state == transtationState.terminateTransaction) {
+			stopReceive();
+			refundCash();
+		}
 	}
 }//End of class CoinReceiver
