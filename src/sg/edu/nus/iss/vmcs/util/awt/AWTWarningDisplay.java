@@ -5,9 +5,11 @@
  * than for the purpose for which it has been supplied.
  *
  */
-package sg.edu.nus.iss.vmcs.util;
+package sg.edu.nus.iss.vmcs.util.awt;
 
 import java.awt.*;
+
+import sg.edu.nus.iss.vmcs.util.components.WarningDisplay;
 
 /**
  * This interface object class implements a generic display label&#46; It provides for setting
@@ -16,7 +18,7 @@ import java.awt.*;
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class WarningDisplay extends Panel {
+public class AWTWarningDisplay extends Panel implements WarningDisplay{
 	private static final Color DEFAULT_FG = Color.yellow;
 	private static final Color DEFAULT_BG = Color.red;
 	private static final Color DEFAULT_OFF = Color.white;
@@ -29,7 +31,7 @@ public class WarningDisplay extends Panel {
 	 * This constructor creates an instance of WarningDisplay object&#46;
 	 * @param label name of the label&#46;
 	 */
-	public WarningDisplay(String label) {
+	public AWTWarningDisplay(String label) {
 		this.setLayout(new FlowLayout());
 		lb = new Label(label);
 		this.add(lb);
@@ -42,7 +44,7 @@ public class WarningDisplay extends Panel {
 	 * @param onFg foreground color when ON.
 	 * @param onBg background color when ON.
 	 */
-	public WarningDisplay(String label, Color onFg, Color onBg) {
+	public AWTWarningDisplay(String label, Color onFg, Color onBg) {
 		this(label, onFg, onBg, DEFAULT_OFF, DEFAULT_OFF);
 		setState(false);
 	}
@@ -55,7 +57,7 @@ public class WarningDisplay extends Panel {
 	 * @param offFg foreground color when OFF&#46;
 	 * @param offBg background color when OFF&#46;
 	 */
-	public WarningDisplay(
+	public AWTWarningDisplay(
 		String label,
 		Color onFg,
 		Color onBg,

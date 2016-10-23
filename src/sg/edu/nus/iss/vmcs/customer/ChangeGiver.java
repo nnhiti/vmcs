@@ -96,7 +96,7 @@ public class ChangeGiver implements Observer{
 		MainController mainCtrl=txCtrl.getMainController();
 		StoreController storeCtrl=mainCtrl.getStoreController();
 		//StoreItem[] cashStoreItems=storeCtrl.getStore(Store.CASH).getItems();
-		Iterator iter = storeCtrl.getStore(Store.CASH).createIterator();
+		Iterator<StoreItem> iter = storeCtrl.getStore(Store.CASH).createIterator();
 		//for(int i=0;i<cashStoreItems.length;i++){
 		while (iter.hasNext()) {
 			//StoreItem storeItem=cashStoreItems[i];
